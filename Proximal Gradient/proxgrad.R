@@ -21,9 +21,6 @@ delf <- function(w){ #method to compose gradient vector of objective function
   return (grad)
 }
 
-Lcon <- 0.5 * (norm(data$Xtrain, type = c("F")))^2
-Wvec <- rep(0, 57)
-
 originalf <- function(w){
   outf <- 0
   for (i in 1:3065){
@@ -36,22 +33,23 @@ originalf <- function(w){
   return (outf[1,1])
 }
 
-proxgrad <- function(initial, L, e, maxiter = 10000) { # unaccelerated proximal gradient projection
+proxgrad <- function(par, L, e, maxiter = 10000) { # unaccelerated proximal gradient projection
   numiter <- 1
-  oldx <- initial
-  X <- initial
+  X <- par
+  oldx <- par
   delfvalue <- delf(X)
   newx <- sign(X - (1/L)*delfvalue)*pmax(Wvec, abs(X - (1/L)*delfvalue) - (0.05/L))
-  while (norm(newx - oldx, type = "2") > e && numiter < maxiter){
+  while (norm(newx - oldx, type = "2") > e && numiter < maxiter) { # abs val wrt stopping criteria epsilon not reached
     numiter <- numiter + 1
     X <- newx
     delfvalue <- delf(X)
     oldx <- newx
     newx <- sign(X - (1/L)*delfvalue)*pmax(Wvec, abs(X - (1/L)*delfvalue) - (0.05/L))
   }
-  print(numiter)
   return (newx)
 }
 
+# Lcon <- 0.5 * (norm(data$Xtrain, type = c("F")))^2
+# Wvec <- rep(0, 57)
 # proxgrad(Wvec, Lcon, 0.001)
 
