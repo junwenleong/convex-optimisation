@@ -37,14 +37,14 @@ proxgrad <- function(par, L, e, maxiter = 10000) { # unaccelerated proximal grad
   numiter <- 1
   X <- par
   oldx <- par
-  delfvalue <- delf(X)
-  newx <- sign(X - (1/L)*delfvalue)*pmax(Wvec, abs(X - (1/L)*delfvalue) - (0.05/L))
+  gradvec <- delf(X)
+  newx <- sign(X - (1/L)*gradvec)*pmax(Wvec, abs(X - (1/L)*gradvec) - (0.05/L))
   while (norm(newx - oldx, type = "2") > e && numiter < maxiter) { # abs val wrt stopping criteria epsilon not reached
     numiter <- numiter + 1
     X <- newx
-    delfvalue <- delf(X)
+    gradvec <- delf(X)
     oldx <- newx
-    newx <- sign(X - (1/L)*delfvalue)*pmax(Wvec, abs(X - (1/L)*delfvalue) - (0.05/L))
+    newx <- sign(X - (1/L)*gradvec)*pmax(Wvec, abs(X - (1/L)*gradvec) - (0.05/L))
   }
   return (newx)
 }
