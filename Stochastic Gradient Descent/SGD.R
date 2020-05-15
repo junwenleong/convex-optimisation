@@ -1,6 +1,6 @@
 library(rje)
 
-LLHgrad <- function(w, X, y) { #gradient of loglikelihood fn 
+LLHgrad <- function(w, X, y) { #gradient of loglikelihood fn for logreg
   n <- dim(X)[1] 
   m <- dim(X)[2] 
   outf <- rep(0, m) 
