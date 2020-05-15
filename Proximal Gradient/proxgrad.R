@@ -34,17 +34,17 @@ originalf <- function(w){
 }
 
 proxgrad <- function(par, L, e, maxiter = 10000) { # unaccelerated proximal gradient projection
-  numiter <- 1
   X <- par
   oldx <- par
   gradvec <- delf(X)
   newx <- sign(X - (1/L)*gradvec)*pmax(Wvec, abs(X - (1/L)*gradvec) - (0.05/L))
+  numiter <- 1
   while (norm(newx - oldx, type = "2") > e && numiter < maxiter) { # abs val wrt stopping criteria epsilon not reached
-    numiter <- numiter + 1
     X <- newx
     gradvec <- delf(X)
     oldx <- newx
     newx <- sign(X - (1/L)*gradvec)*pmax(Wvec, abs(X - (1/L)*gradvec) - (0.05/L))
+    numiter <- numiter + 1
   }
   return (newx)
 }
