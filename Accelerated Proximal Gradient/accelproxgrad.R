@@ -3,7 +3,7 @@ library(pracma)
 library(rje)
 library(R.matlab)
 
-data <- readMat("APGdata.mat") #load Matlab data file
+data <- readMat("APGdata.mat") # Matlab data file
 
 delf <- function(w){ #method to compose gradient vector of objective function
   grad <- 0
