@@ -33,20 +33,19 @@ originalf <- function(w){
   return (outf[1,1])
 }
 
-accproxgrad <- function(initial, L, e, iterbound = 10000) {  # accelerated proximal gradient projection
+accproxgrad <- function(par, L, e, iterbound = 10000) {  # accelerated proximal gradient projection
   i <- 1
-  oldx <- initial
+  oldx <- par
+  X <- par
   oldt <- 1
   newt <- 1
   beta <- (oldt - 1)/newt
-  X <- initial
   delfvalue <- delf(X)
-  tempvalue <- 0
-  newx <- sign(X - (1/L)*delfvalue) * pmax(Wvec, abs(X - (1/L)*delfvalue) - (0.05/L))
-  while (norm(newx - oldx, type = "2") > e && i < iterbound){
+  newx <- sign( X - (1/L) * delfvalue) * pmax(Wvec, abs(X - (1/L) * delfvalue) - (0.05/L)) 
+  while (norm(newx - oldx, type = "2") > e && i < iterbound){ # abs val wrt stopping criteria epsilon not reached
     oldt <- newt
-    newt <- 0.5*(1+sqrt(1+4*(oldt^2)))
-    beta <- (oldt-1)/newt
+    newt <- 0.5 * (1 + sqrt(1 + 4 * (oldt^2)))
+    beta <- (oldt - 1)/newt
     X <- newx + beta * (newx-oldx)
     delfvalue <- delf(X)
     oldx <- newx
